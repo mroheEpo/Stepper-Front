@@ -1,0 +1,19 @@
+{
+  "name": "vite-js",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "^1.61.1",
+    "vite": "^4.3.4",
+    "vue-template-compiler": "^2.7.14"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue2": "^2.2.0",
+    "vue": "^2.7.14",
+    "vuetify": "^2.6.15"
+  }
+}

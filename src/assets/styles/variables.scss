@@ -1,0 +1,45 @@
+@import './base-colors.scss';
+@import './fonts.scss';
+
+$btn-border-radius: 25px;
+// Disable uppercase in button
+$btn-text-transform: none;
+// Use important to override conflict with bootstrap that is carried by prestatshop
+$btn-font-weight: 600 !important;
+
+// Timeline width
+$timeline-divider-width: calc(40px + 5vw);
+$stepper-content-padding: 24px 5px 16px 5px !default;
+
+// Override bootstrap weird behavior
+.row {
+  &::after {
+    content: unset;
+  }
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'VisbyRoundCF', sans-serif;
+  text-transform: unset;
+}
+
+a.v-btn.v-btn--is-elevated,
+button.v-btn.v-btn--is-elevated {
+  box-shadow: none;
+}
+
+.theme--light.v-text-field>.v-input__control>.v-input__slot:before {
+  border: none !important;
+}
+
+/*stepper*/
+.theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
+  background-color: #e1e5f5 !important;
+}
+.v-stepper__header {
+  box-shadow: none !important;
+}

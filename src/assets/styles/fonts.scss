@@ -1,0 +1,51 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic%7CRoboto+Slab:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap);
+
+/* Start Custom Fonts CSS */
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Light.woff') format('woff'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Light.woff2') format('woff2'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Light.ttf') format('truetype'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Light.otf') format('opentype');
+}
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Bold.woff') format('woff'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Bold.woff2') format('woff2'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Bold.ttf') format('truetype'),
+    url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Bold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-ExtraBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://www.epopia.com/modules/creativeelements/views/fonts/VisbyRoundCF-DemiBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'VisbyRoundCF';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('/modules/creativeelements/views/fonts/VisbyRoundCF-Regular.otf') format('opentype');
+}
