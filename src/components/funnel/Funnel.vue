@@ -106,12 +106,14 @@
         </v-stepper-content>
 
         <v-stepper-content :step="(!productToAdd.is_school ? '5' : '2')">
-          <!--TODO : Cart -->
           <CartStep @cart-validation="cartValidation()"/>
         </v-stepper-content>
 
         <v-stepper-content :step="(!productToAdd.is_school ? '6' : '3')">
-          <PaymentStep/>
+          <PaymentStep
+            :showBooks="!productToAdd.is_school"
+            @add-book="addBookToCart()"
+          />
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -212,6 +214,10 @@
   }
   function cartValidation () {
     actualStep.value++
+  }
+  function addBookToCart () {
+    //TODO : add book to cart
+    console.log('add book to cart - from selected universe')
   }
   function addTocart (id_product, id_product_attribute) {
     console.log('addToCart')

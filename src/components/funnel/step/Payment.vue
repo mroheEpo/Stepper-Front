@@ -2,6 +2,8 @@
   <div>
     <BooksAdvertisement
       v-if="showBooks"
+      @no-books="showBooks = false"
+      @add-book="addBookToCart()"
     />
   </div>
 </template>
@@ -10,8 +12,17 @@
   import BooksAdvertisement from './Books.vue';
   import { ref } from 'vue'
 
-  //TODO : see whe show and not
-  const showBooks =  ref(true)
+  const props = defineProps({
+    showBooks: {
+      type: Boolean,
+      default: true
+    },
+  })
+
+  const emit = defineEmits('add-book')
+  function addBookToCart () {
+    emit('add-book')
+  }
 
 </script>
 
