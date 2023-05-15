@@ -30,8 +30,8 @@
   })
 
   const emit = defineEmits('add-to-cart')
-  function addToCartEmit (id_product) {
-    emit('add-to-cart', id_product)
+  function addToCartEmit (id_product, id_product_attribute) {
+    emit('add-to-cart', id_product, id_product_attribute)
   }
 </script>
 

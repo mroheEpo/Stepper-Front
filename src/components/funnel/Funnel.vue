@@ -69,19 +69,25 @@
       />
 
       <v-stepper-items>
-        <v-stepper-content step="1">
+        <v-stepper-content 
+          step="1"
+          v-if="!productToAdd.is_school"
+        >
           <ChildInfosStep
             @get-child-infos="getChildInfos"
           />
         </v-stepper-content>
 
-        <v-stepper-content step="2">
+        <v-stepper-content 
+          step="2"
+          v-if="!productToAdd.is_school"
+        >
           <ProductTypeStep
             @get-product-type="getProductType"
           />
         </v-stepper-content>
 
-        <v-stepper-content step="3">
+        <v-stepper-content :step="(!productToAdd.is_school ? '3' : '1')">
           <AttributesListStep 
             :attributes="attributes"
             :isSchool="productToAdd.is_school"
@@ -89,18 +95,21 @@
           />
         </v-stepper-content>
         
-        <v-stepper-content step="4">
+        <v-stepper-content 
+          step="4"
+          v-if="!productToAdd.is_school"
+        >
           <ProductsListStep 
             :products="products"
             @add-to-cart="addTocart"
           />
         </v-stepper-content>
 
-        <v-stepper-content step="5">
+        <v-stepper-content :step="(!productToAdd.is_school ? '5' : '2')">
           <!--TODO : Cart -->
         </v-stepper-content>
 
-        <v-stepper-content step="6">
+        <v-stepper-content :step="(!productToAdd.is_school ? '6' : '3')">
           <PaymentStep/>
         </v-stepper-content>
       </v-stepper-items>
@@ -174,8 +183,16 @@
 
   function getCustomerType (customer_type) {
     productToAdd.value.is_school = customer_type
+    productToAdd.value.product_type = null
+    productToAdd.value.id_attribute = null
+    productToAdd.value.id_product = null
+    productToAdd.value.id_product_attribute = null
+    productToAdd.value.customer.name = null
+    productToAdd.value.customer.age = null
+
     attributes.value = getAttributes()
-    return (productToAdd.value.is_school ? actualStep.value = 3 : actualStep.value = 1)
+    
+    return actualStep.value = 1
   }
   function getChildInfos (datas) {
     productToAdd.value.customer.name = datas.name
@@ -192,14 +209,18 @@
   function getSelectedAttribute (id_attribute) {
     productToAdd.value.id_attribute = id_attribute
     products.value = getProducts(id_attribute)
-    actualStep.value++
+
+    if (productToAdd.value.is_school) {
+      actualStep.value++
+    } else {
+      actualStep.value++
+    }
   }
   function addTocart (id_product, id_product_attribute) {
     console.log('addToCart')
-    console.log('id_product : ' + id_product + 'id_product_attribute : ' + id_product_attribute)
+    console.log('id_product : ' + id_product + ' - id_product_attribute : ' + id_product_attribute)
     productToAdd.value.id_product = id_product
     productToAdd.value.id_product_attribute = id_product_attribute
-    console.log(productToAdd.value)
     // TODO : create customization 
     // TODO : addTo Cart
     actualStep.value++
@@ -259,6 +280,7 @@
         },
       ]
     } else {
+      //TODO : v-if productToAdd.value.product_type == "box" -> select boxes
       return [
         {
           id: 1,

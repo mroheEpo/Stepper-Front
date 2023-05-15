@@ -1,7 +1,6 @@
 <template>
   <div class="text-center">
     <h1 class="primary--text">Quel produit allez vous choisir ?</h1>
-    {{ productType }}
     <div class="d-flex flex-row justify-center">
       <div class="card__container ma-5 pa-5 col-md-5 col-11">
         <h3 class="primary--text">Voyager à travers <span>les courriers</span></h3>

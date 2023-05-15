@@ -37,7 +37,7 @@
 
   const emit = defineEmits('add-to-cart')
   function addToCartEmit () {
-    emit('add-to-cart', props.product.id)
+    emit('add-to-cart', props.product.id, props.product.id_product_attribute)
   }
 </script>
 

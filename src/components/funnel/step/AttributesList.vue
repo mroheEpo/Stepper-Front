@@ -31,6 +31,7 @@
         <SchoolAttributeCard
           :attribute="attribute"
           v-else
+          @selected-attribute="selectedAttributeEmit"
         />
       </v-list-item>
     </v-list>
