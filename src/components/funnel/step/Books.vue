@@ -36,11 +36,12 @@
 </template>
 
 <script setup>
+  const emit = defineEmits('add-book', 'no-books')
   function addBook () {
-    console.log("TODO: add book")
+    emit('add-book')
   }
   function noBook () {
-    console.log("TODO: go payment page")
+    emit('no-books')
   }
 </script>
 
