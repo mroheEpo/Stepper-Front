@@ -9,12 +9,13 @@
       <v-stepper-header>
         <v-stepper-step 
           step="1" 
+          v-if="!productToAdd.is_school"
           :complete="isFirstStepComplete()"
         >
           <p class="text-center primary--text">Le héros</p>
         </v-stepper-step>
 
-        <v-divider></v-divider>
+        <v-divider v-if="!productToAdd.is_school"></v-divider>
 
         <v-stepper-step 
           step="2"
@@ -24,10 +25,10 @@
           <p class="text-center primary--text">Le Format</p>
         </v-stepper-step>
 
-        <v-divider></v-divider>
+        <v-divider v-if="!productToAdd.is_school"></v-divider>
 
         <v-stepper-step 
-          step="3"
+          :step="(!productToAdd.is_school ? '3' : '1')"
           :complete="isThirdStepComplete()"
         >
           <p class="text-center primary--text">Abonnements</p>
@@ -37,6 +38,7 @@
 
         <v-stepper-step 
           step="4"
+          v-if="!productToAdd.is_school"
           :complete="isFourthStepComplete()"
         >
           <p class="text-center primary--text">Univers</p>
@@ -45,7 +47,7 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          step="5"
+          :step="(!productToAdd.is_school ? '5' : '2')"
           :complete="isFithStepComplete()"
         >
           <p class="text-center primary--text">Panier</p>
@@ -54,7 +56,7 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          step="6"
+          :step="(!productToAdd.is_school ? '6' : '3')"
           :complete="isSixthStepComplete()"
         >
           <p class="text-center primary--text">Paiement</p>
@@ -661,7 +663,6 @@
   /*
   TODO :
   @media #{map-get($display-breakpoints, 'md-and-up')} {
-
   - traductions
   - API connection
   - voir img
