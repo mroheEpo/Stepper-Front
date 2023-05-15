@@ -107,6 +107,7 @@
 
         <v-stepper-content :step="(!productToAdd.is_school ? '5' : '2')">
           <!--TODO : Cart -->
+          <CartStep @cart-validation="cartValidation()"/>
         </v-stepper-content>
 
         <v-stepper-content :step="(!productToAdd.is_school ? '6' : '3')">
@@ -123,6 +124,7 @@
   import ProductTypeStep from './step/ProductTypeStep.vue'
   import AttributesListStep from './step/AttributesList.vue'
   import ProductsListStep from './step/ProductsList.vue'
+  import CartStep from './step/Cart.vue'
   import PaymentStep from './step/Payment.vue'
   import { ref, onMounted } from 'vue'
 
@@ -191,7 +193,6 @@
     productToAdd.value.customer.age = null
 
     attributes.value = getAttributes()
-    
     return actualStep.value = 1
   }
   function getChildInfos (datas) {
@@ -200,21 +201,17 @@
     actualStep.value++
   }
   function getProductType (product_type) {
-    console.log(product_type)
     productToAdd.value.product_type = product_type
-    console.log(productToAdd.value)
     attributes.value = getAttributes(product_type)
     actualStep.value++
   }
   function getSelectedAttribute (id_attribute) {
     productToAdd.value.id_attribute = id_attribute
     products.value = getProducts(id_attribute)
-
-    if (productToAdd.value.is_school) {
-      actualStep.value++
-    } else {
-      actualStep.value++
-    }
+    actualStep.value++
+  }
+  function cartValidation () {
+    actualStep.value++
   }
   function addTocart (id_product, id_product_attribute) {
     console.log('addToCart')
