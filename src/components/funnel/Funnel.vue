@@ -9,26 +9,26 @@
       <v-stepper-header>
         <v-stepper-step 
           step="1" 
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
           :complete="isFirstStepComplete()"
         >
           <p class="text-center primary--text">Le héros</p>
         </v-stepper-step>
 
-        <v-divider v-if="!productToAdd.is_school"></v-divider>
+        <v-divider v-if="!customerToAdd.is_school"></v-divider>
 
         <v-stepper-step 
           step="2"
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
           :complete="isSecondStepComplete()"
         >
           <p class="text-center primary--text">Le Format</p>
         </v-stepper-step>
 
-        <v-divider v-if="!productToAdd.is_school"></v-divider>
+        <v-divider v-if="!customerToAdd.is_school"></v-divider>
 
         <v-stepper-step 
-          :step="(!productToAdd.is_school ? '3' : '1')"
+          :step="(!customerToAdd.is_school ? '3' : '1')"
           :complete="isThirdStepComplete()"
         >
           <p class="text-center primary--text">Abonnements</p>
@@ -38,7 +38,7 @@
 
         <v-stepper-step 
           step="4"
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
           :complete="isFourthStepComplete()"
         >
           <p class="text-center primary--text">Univers</p>
@@ -47,7 +47,7 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          :step="(!productToAdd.is_school ? '5' : '2')"
+          :step="(!customerToAdd.is_school ? '5' : '2')"
           :complete="isFithStepComplete()"
         >
           <p class="text-center primary--text">Panier</p>
@@ -56,7 +56,7 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          :step="(!productToAdd.is_school ? '6' : '3')"
+          :step="(!customerToAdd.is_school ? '6' : '3')"
           :complete="isSixthStepComplete()"
         >
           <p class="text-center primary--text">Paiement</p>
@@ -64,14 +64,20 @@
       </v-stepper-header>
 
       <CustomerTypeStep 
-        :isSchool="productToAdd.is_school"
+        :isSchool="customerToAdd.is_school"
         @get-customer-type="getCustomerType"
       />
+      <v-alert 
+        v-if="error != null" 
+        type="error"
+      >
+        {{ error }}
+      </v-alert>
 
       <v-stepper-items>
         <v-stepper-content 
           step="1"
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
         >
           <ChildInfosStep
             @get-child-infos="getChildInfos"
@@ -80,38 +86,38 @@
 
         <v-stepper-content 
           step="2"
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
         >
           <ProductTypeStep
             @get-product-type="getProductType"
           />
         </v-stepper-content>
 
-        <v-stepper-content :step="(!productToAdd.is_school ? '3' : '1')">
+        <v-stepper-content :step="(!customerToAdd.is_school ? '3' : '1')">
           <AttributesListStep 
             :attributes="attributes"
-            :isSchool="productToAdd.is_school"
+            :isSchool="customerToAdd.is_school"
             @selected-attribute="getSelectedAttribute"
           />
         </v-stepper-content>
         
         <v-stepper-content 
           step="4"
-          v-if="!productToAdd.is_school"
+          v-if="!customerToAdd.is_school"
         >
           <ProductsListStep 
             :products="products"
-            @add-to-cart="addTocart"
+            @add-to-cart="createCustomization()"
           />
         </v-stepper-content>
 
-        <v-stepper-content :step="(!productToAdd.is_school ? '5' : '2')">
+        <v-stepper-content :step="(!customerToAdd.is_school ? '5' : '2')">
           <CartStep @cart-validation="cartValidation()"/>
         </v-stepper-content>
 
-        <v-stepper-content :step="(!productToAdd.is_school ? '6' : '3')">
+        <v-stepper-content :step="(!customerToAdd.is_school ? '6' : '3')">
           <PaymentStep
-            :showBooks="!productToAdd.is_school"
+            :showBooks="!customerToAdd.is_school"
             @add-book="addBookToCart()"
           />
         </v-stepper-content>
@@ -139,17 +145,19 @@
   const products = ref([])
   const attributes = ref([])
   const productToAdd = ref(null)
+  const customerToAdd = ref(null)
+  const error = ref(null)
 
   function isFirstStepComplete () {
-    if (productToAdd.value.is_school 
-      || (productToAdd.value.customer.name != null
-      && productToAdd.value.customer.age != null)) {
+    if (customerToAdd.value.is_school 
+      || (customerToAdd.value.name != null
+      && customerToAdd.value.age != null)) {
       return true
     }
     return false
   }
   function isSecondStepComplete () {
-    if (productToAdd.value.is_school
+    if (customerToAdd.value.is_school
       || (isFirstStepComplete()
       && productToAdd.value.product_type != null)) {
       return true
@@ -164,7 +172,7 @@
     return false
   }
   function isFourthStepComplete () {
-    if (productToAdd.value.is_school
+    if (customerToAdd.value.is_school
       || (isThirdStepComplete()
       && productToAdd.value.id_product != null
       && productToAdd.value.id_product_attribute != null)) {
@@ -186,20 +194,20 @@
   }
 
   function getCustomerType (customer_type) {
-    productToAdd.value.is_school = customer_type
+    customerToAdd.value.is_school = customer_type
     productToAdd.value.product_type = null
     productToAdd.value.id_attribute = null
     productToAdd.value.id_product = null
     productToAdd.value.id_product_attribute = null
-    productToAdd.value.customer.name = null
-    productToAdd.value.customer.age = null
+    customerToAdd.value.name = null
+    customerToAdd.value.age = null
 
     attributes.value = getAttributes()
     return actualStep.value = 1
   }
   function getChildInfos (datas) {
-    productToAdd.value.customer.name = datas.name
-    productToAdd.value.customer.age = datas.age
+    name.value.name = datas.name
+    name.value.age = datas.age
     actualStep.value++
   }
   function getProductType (product_type) {
@@ -219,13 +227,49 @@
     //TODO : add book to cart
     console.log('add book to cart - from selected universe')
   }
-  function addTocart (id_product, id_product_attribute) {
-    console.log('addToCart')
+  function createCustomization (id_product, id_product_attribute) {
     console.log('id_product : ' + id_product + ' - id_product_attribute : ' + id_product_attribute)
     productToAdd.value.id_product = id_product
     productToAdd.value.id_product_attribute = id_product_attribute
+
     // TODO : create customization 
-    // TODO : addTo Cart
+    /* axios
+    .get(props.apiUrl, { params: { 
+      action: 'addCustomization', 
+      id_product: productToAdd.value.id_product,
+      id_product_attribute: productToAdd.value.id_product_attribute,
+      id_cart: productToAdd.value.id_cart,
+      id_address_delivery: productToAdd.value.id_address_delivery,
+      quantity: productToAdd.value.quantity,
+      quantity_refunded: productToAdd.value.quantity_refunded,
+      quantity_returned: productToAdd.value.quantity_returned,
+      in_cart: productToAdd.value.in_cart,
+    } })
+    .then(response => {
+      productToAdd.value.id_customization = response.data
+      error.value = null
+      addToCart()
+    })
+    .catch(error => {
+      console.log(error)
+      error.value = error
+    }) */
+  }
+
+  function addToCart () {
+    console.log('addToCart')
+    // TODO : addTo Cart - use productToAdd
+    /* axios
+    .get(props.apiUrl, { params: { action: 'Index', product: productToAdd.value } })
+    .then(response => {
+      console.log(response.data)
+      error.value = null
+      actualStep.value++
+    })
+    .catch(error => {
+      error.value = error
+    }) */
+
     actualStep.value++
   } 
 
@@ -239,7 +283,7 @@
     .catch(error => {
       console.log(error)
     }) */
-    if (productToAdd.value.is_school) {
+    if (customerToAdd.value.is_school) {
       return [
         {
           id: 1,
@@ -654,18 +698,26 @@
 
   onMounted(() => {
     productToAdd.value = {
-      is_school: ref(false),
-      product_type: ref(null),
-      id_attribute: ref(null),
       id_product: ref(null),
       id_product_attribute: ref(null),
-      customer: {
-        name: ref(null),
-        age: ref(null),
-      }
+      product_type: ref(null),
+      id_attribute: ref(null),
+      id_customization: ref(null),
+      id_cart: ref(null),
+      quantity: ref(1),
+      //quantity_refunded: ref(0),
+      //quantity_returned: ref(0),
+      //id_address_delivery: ref(null),
+      //in_cart: ref(true),
+    },
+    customerToAdd.value = {
+      is_school: ref(false),
+      name: ref(null),
+      age: ref(null),
     }
+
     /* axios
-    .get(props.apiUrl, { params: { action: 'Index' } })
+    .get(props.apiUrl, { params: { action: '' } })
     .then(response => {
       productToAdd.value = response.data
       console.log(productToAdd.value)
@@ -676,6 +728,17 @@
         attributes.value = getAttributes(productToAdd.value.product_type)
         console.log(attributes.value)
       }
+    })
+    .catch(error => {
+      console.log(error)
+    }) */
+
+    /* axios
+    .get(props.apiUrl, { params: { action: '' } })
+    .then(response => {
+      customerToAdd.value = response.data
+      console.log(customerToAdd.value)
+
     })
     .catch(error => {
       console.log(error)

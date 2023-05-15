@@ -21,6 +21,7 @@
 
   const emit = defineEmits('add-book')
   function addBookToCart () {
+    props.showBooks = false
     emit('add-book')
   }
 
