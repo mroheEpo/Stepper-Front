@@ -136,6 +136,7 @@
   import CartStep from './step/Cart.vue'
   import PaymentStep from './step/Payment.vue'
   import { ref, onMounted } from 'vue'
+  //import axios from 'axios'
 
   const actualStep = ref(1)
   const isFirstStepActive = ref(true)
@@ -148,6 +149,10 @@
   const productToAdd = ref(null)
   const customerToAdd = ref(null)
   const error = ref(null)
+
+  const customizationUrl = ref('https://www.epopia.com/module/epopiacore/ApiGetProductCustomization')
+  const cartUrl = ref('https://www.epopia.com/fr/panier?content_only=1&action=show')
+  const token = ref(null)
 
   function isFirstStepComplete () {
     if (customerToAdd.value.is_school 
@@ -233,18 +238,12 @@
     productToAdd.value.id_product_attribute = id_product_attribute
     addToCart()
 
-    // TODO : create customization 
     /* axios
-    .get(props.apiUrl, { params: { 
-      action: 'addCustomization', 
+    .post( customizationUrl.value, null, { params: { 
       id_product: productToAdd.value.id_product,
       id_product_attribute: productToAdd.value.id_product_attribute,
-      id_cart: productToAdd.value.id_cart,
-      id_address_delivery: productToAdd.value.id_address_delivery,
-      quantity: productToAdd.value.quantity,
-      quantity_refunded: productToAdd.value.quantity_refunded,
-      quantity_returned: productToAdd.value.quantity_returned,
-      in_cart: productToAdd.value.in_cart,
+      name: customerToAdd.value.name,
+      age: customerToAdd.value.age,
     } })
     .then(response => {
       productToAdd.value.id_customization = response.data
@@ -256,20 +255,28 @@
       error.value = error
     }) */
   }
-
   function addToCart () {
     console.log('addToCart')
-    // TODO : addTo Cart - use productToAdd
-    /* axios
-    .get(props.apiUrl, { params: { action: 'Index', product: productToAdd.value } })
+    console.log(cartUrl.value)
+    console.log(token.value)
+
+    /*axios
+    .post( cartUrl.value, null, { params: { 
+      token: token.value , 
+      id_product: productToAdd.value.id_product,
+      id_product_attribute: productToAdd.value.id_product_attribute,
+      id_customization: productToAdd.value.id_customization,
+      add: 1
+    } })
     .then(response => {
       console.log(response.data)
       error.value = null
-      actualStep.value++
+      //TODO : redirection on cartUrl.value
     })
     .catch(error => {
+      console.log(error)
       error.value = error
-    }) */
+    })*/
 
     actualStep.value++
   } 
@@ -703,7 +710,7 @@
       id_product_attribute: ref(null),
       product_type: ref(null),
       id_attribute: ref(null),
-      id_customization: ref(null),
+      id_customization: ref(0),
       id_cart: ref(null),
       quantity: ref(1),
       //quantity_refunded: ref(0),
@@ -749,13 +756,17 @@
   })
 
 
-  /*
+/*
+  NEEDS :
+    - cart url
+    - token "getToken -> tools.php"
+
   TODO :
   @media #{map-get($display-breakpoints, 'md-and-up')} {
   - traductions
   - API connection
   - voir img
-  */
+*/
 </script>
 
 <style scoped lang="scss">
