@@ -107,7 +107,8 @@
         >
           <ProductsListStep 
             :products="products"
-            @add-to-cart="createCustomization()"
+            :child="customerToAdd"
+            @add-to-cart="createCustomization"
           />
         </v-stepper-content>
 
@@ -206,8 +207,8 @@
     return actualStep.value = 1
   }
   function getChildInfos (datas) {
-    name.value.name = datas.name
-    name.value.age = datas.age
+    customerToAdd.value.name = datas.name
+    customerToAdd.value.age = datas.age
     actualStep.value++
   }
   function getProductType (product_type) {
@@ -228,9 +229,9 @@
     console.log('add book to cart - from selected universe')
   }
   function createCustomization (id_product, id_product_attribute) {
-    console.log('id_product : ' + id_product + ' - id_product_attribute : ' + id_product_attribute)
     productToAdd.value.id_product = id_product
     productToAdd.value.id_product_attribute = id_product_attribute
+    addToCart()
 
     // TODO : create customization 
     /* axios

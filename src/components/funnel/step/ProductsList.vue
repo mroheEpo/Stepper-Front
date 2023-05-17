@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Quelle va être la première aventure de <span>child.firstname</span> ?</h2>
-    <p>Nous avons sélectionné les histoires correspondant à l’âge de <span>child.firstname</span>
+    <h2>Quelle va être la première aventure de <span>{{ child.name }}</span> ?</h2>
+    <p>Nous avons sélectionné les histoires correspondant à l’âge de <span>{{ child.name }}</span>
         pour l’accompagner au mieux dans le monde magique d’Epopia </p>
     
     <v-list class="productsList__container row">
@@ -25,6 +25,10 @@
   const props = defineProps({
     products: {
       type: Array,
+      required: true
+    },
+    child: {
+      type: Object,
       required: true
     },
   })
