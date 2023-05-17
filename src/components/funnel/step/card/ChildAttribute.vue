@@ -1,9 +1,10 @@
 <template>
   <div 
     :class="{'card__container--annuel' : attribute.frequency_unit == 'annuel'}"
-    class="card__globalContainer"
+    class="card__globalContainer mb-8 mb-md-0"
   >
-    <div class="card__container d-flex flex-column">
+    <div class="card__container d-flex flex-column pt-md-0 pt-6">
+      <!--TODO : img v-if on desktop-->
       <div class="d-flex justify-center mb-4">
         <v-img
           max-height="100"
@@ -57,7 +58,9 @@
 
     .card__container{
       position: relative;
-      top: -50px;
+      @media screen and (min-width: 900px) {
+        top: -50px;
+      }
     }
 
     .card__catchphrase {

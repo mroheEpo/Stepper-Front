@@ -79,7 +79,7 @@
             color="secondary"
             class="py-2 px-5 addToCart__button"
             rounded
-            @click="dialog = false && addToCartEmit"
+            @click="addToCartEmit"
           >
             Choisir cette histoire
           </v-btn>
@@ -103,6 +103,7 @@
   const emit = defineEmits('add-to-cart')
   function addToCartEmit () {
     emit('add-to-cart')
+    dialog.value = false
   }
 
   const dialog = ref(false)

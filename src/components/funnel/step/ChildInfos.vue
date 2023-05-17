@@ -116,8 +116,11 @@
 
     .childInfosName__container {
       text-align: center;
-      max-width: 540px;
+      max-width: 360px;
       margin: 1rem auto 6rem;
+      @media screen and (min-width: 900px) {
+        max-width: 540px;
+      }
 
       .childInfosName__input {
         font-weight: 300;
@@ -155,6 +158,12 @@
       display: flex;
       justify-content: center;
       margin: 0 auto;
+      width: 80%;
+      background-color: #E1E5F5;
+      overflow-x: scroll;
+      @media screen and (min-width: 900px) {
+        width: 40%;
+      }
     }
     .childInfosAgeChoice__agesContainer {
       display: flex;
@@ -179,5 +188,8 @@
       background-color: #742985;
       color: white !important;
     }
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
   }
 </style>

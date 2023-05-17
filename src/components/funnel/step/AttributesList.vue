@@ -18,7 +18,7 @@
         class="mt-4 primary--text"
       >Plongez vos élèves dans des aventures immersives et donnez du sens à leur apprentissage !</p>
     </div>
-    <v-list class="cards__container d-flex flex-row justify-space-around my-16">
+    <v-list class="cards__container d-flex flex-column flex-md-row justify-space-around my-16">
       <v-list-item
         v-for="attribute in attributes"
         :key="attribute.id"

@@ -1,8 +1,8 @@
 <template>
   <div class="text-center">
     <h1 class="primary--text">Quel produit allez vous choisir ?</h1>
-    <div class="d-flex flex-row justify-center">
-      <div class="card__container ma-5 pa-5 col-md-5 col-11">
+    <div class="d-flex flex-md-row flex-column justify-center">
+      <div class="card__container ma-5 pa-5 col-md-5 col-10 align-center">
         <h3 class="primary--text">Voyager à travers <span>les courriers</span></h3>
         <v-img
           class="card__img"
@@ -21,7 +21,7 @@
           Je choisis les courriers
         </v-btn>
       </div>
-      <div class="card__container ma-5 pa-5 col-md-5 col-11">
+      <div class="card__container ma-5 pa-5 col-md-5 col-10 align-center">
         <h3 class="primary--text">Voyager avec <span>la box</span></h3>
         <v-img
           class="card__img"
