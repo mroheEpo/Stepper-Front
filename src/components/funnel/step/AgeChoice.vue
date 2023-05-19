@@ -1,6 +1,6 @@
 <template>
   <swiper-container 
-    :slides-per-view="9"  
+    :slides-per-view="8"  
     :centered-slides="true"
     @slidechange="childAgeEmit"
   >

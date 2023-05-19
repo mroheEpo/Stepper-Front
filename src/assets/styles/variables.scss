@@ -43,10 +43,20 @@ button.v-btn.v-btn--is-elevated {
 .v-stepper__header {
   box-shadow: none !important;
 }
+.v-stepper__step--inactive .v-stepper__label p {
+  color: #e1e5f5 !important;
+}
+.v-stepper__content {
+  padding: 0 !important;
+}
 
 
+/* age selector */
 .swiper-slide-active {
   border-radius: 50%;
   background-color: #742985;
   color: white !important;
+  height: 25px;
+  padding-top: 5px;
+  width: 30px !important;
 }

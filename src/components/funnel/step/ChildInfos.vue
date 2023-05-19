@@ -11,7 +11,7 @@
       ></v-text-field>
     </div>
     <div class="childInfosAge__container">
-      <h2>Quel est l’âge de 
+      <h2 class="mb-8">Quel est l’âge de 
         <span v-if="childName != null">{{ childName }}</span> 
         <span v-else>l'enfant</span> 
       ?</h2>
@@ -20,6 +20,7 @@
         <AgeChoice @get-child-age="selectedAge"/>
       </div>
       <v-btn
+        class="mt-8"
         @click="childInfosEmit"
       >
         Continuer
@@ -32,7 +33,7 @@
   import AgeChoice from './AgeChoice.vue'
   import { ref } from 'vue'
 
-  const childAge = ref(null)
+  const childAge = ref(3)
   const childName = ref(null)
   
   const emit = defineEmits('get-child-infos')
@@ -56,6 +57,7 @@
   h2 {
     color: #00124e;
     font-size: 40px;
+    font-weight: 900;
     line-height: 45px;
     margin-bottom: 1rem;
     text-transform: unset;
@@ -76,7 +78,7 @@
     .childInfosName__container {
       text-align: center;
       max-width: 360px;
-      margin: 1rem auto 6rem;
+      margin: 1rem auto 5rem;
       @media screen and (min-width: 900px) {
         max-width: 540px;
       }
@@ -97,6 +99,8 @@
       text-align: center;
       background-color: #E1E5F5;
       padding: 1rem 1rem 3rem;
+      font-size: 28px;
+      font-weight: normal;
 
       button {
         width: 250px;

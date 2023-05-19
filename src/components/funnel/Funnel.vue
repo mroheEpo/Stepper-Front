@@ -1,9 +1,9 @@
 <template>
   <div class="steps__globalContainer">
     <v-img
-      class=""
-      max-height="50"
-      max-width="80"
+      class="steps__logo"
+      max-height="100"
+      max-width="140"
       src="https://www.epopia.com/img/cms/Rectangle%201.png"
     ></v-img>
     <v-stepper 
@@ -567,9 +567,7 @@
     left: -10%;
 
     .steps__logo {
-      display: block;
       margin: 1rem auto;
-      max-width: 80px;
     }
 
     .headerSteps__container {

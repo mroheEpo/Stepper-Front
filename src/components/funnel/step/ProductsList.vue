@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h2>Quelle va être la première aventure de <span>{{ child.name }}</span> ?</h2>
-    <p>Nous avons sélectionné les histoires correspondant à l’âge de <span>{{ child.name }}</span>
+    <h2 class="mx-8">Quelle va être la première aventure de <span>{{ child.name }}</span> ?</h2>
+    <p class="mx-8">Nous avons sélectionné les histoires correspondant à l’âge de <span>{{ child.name }}</span>
         pour l’accompagner au mieux dans le monde magique d’Epopia </p>
     
     <v-list class="productsList__container row">
       <v-list-item
         v-for="product in products"
         :key="product.id"
-        class="card__globalContainer col-md-3"
+        class="card__globalContainer col-md-3 mx-0 mx-8"
       >
         <productCard
           :product="product"
