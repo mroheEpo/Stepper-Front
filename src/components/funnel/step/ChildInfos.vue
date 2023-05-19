@@ -17,7 +17,8 @@
       ?</h2>
 
       <div class="childInfosAgeChoice__container">
-        <v-list class="childInfosAgeChoice__agesContainer">
+        <AgeChoice/>
+        <!--v-list class="childInfosAgeChoice__agesContainer">
           <v-list-item
             v-for="age in ages"
             :key="age"
@@ -26,7 +27,7 @@
           > 
             {{ age }} 
           </v-list-item>
-        </v-list>
+        </v-list-->
       </div>
       <v-btn
         @click="childInfosEmit"
@@ -38,6 +39,7 @@
 </template>
 
 <script setup>
+  import AgeChoice from './AgeChoice.vue'
   import { ref, reactive, onMounted } from 'vue'
   
   const emit = defineEmits('get-child-infos')

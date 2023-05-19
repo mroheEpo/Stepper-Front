@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-vue2": "^2.2.0",
+    "swiper": "^9.3.2",
     "vue": "^2.7.14",
     "vuetify": "^2.6.15"
   }
