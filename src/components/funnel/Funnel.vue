@@ -1,6 +1,11 @@
 <template>
   <div class="steps__globalContainer">
-    <img class="steps__logo" src='https://www.epopia.com/img/cms/Rectangle%201.png'/>
+    <v-img
+      class=""
+      max-height="50"
+      max-width="80"
+      src="https://www.epopia.com/img/cms/Rectangle%201.png"
+    ></v-img>
     <v-stepper 
       alt-labels 
       flat
@@ -9,27 +14,16 @@
       <v-stepper-header>
         <v-stepper-step 
           step="1" 
-          v-if="!customerToAdd.is_school"
           :complete="isFirstStepComplete()"
         >
           <p class="text-center primary--text">Le héros</p>
         </v-stepper-step>
 
-        <v-divider v-if="!customerToAdd.is_school"></v-divider>
+        <v-divider></v-divider>
 
         <v-stepper-step 
           step="2"
-          v-if="!customerToAdd.is_school"
           :complete="isSecondStepComplete()"
-        >
-          <p class="text-center primary--text">Le Format</p>
-        </v-stepper-step>
-
-        <v-divider v-if="!customerToAdd.is_school"></v-divider>
-
-        <v-stepper-step 
-          :step="(!customerToAdd.is_school ? '3' : '1')"
-          :complete="isThirdStepComplete()"
         >
           <p class="text-center primary--text">Abonnements</p>
         </v-stepper-step>
@@ -37,18 +31,7 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          step="4"
-          v-if="!customerToAdd.is_school"
-          :complete="isFourthStepComplete()"
-        >
-          <p class="text-center primary--text">Univers</p>
-        </v-stepper-step>
-
-        <v-divider></v-divider>
-
-        <v-stepper-step 
-          :step="(!customerToAdd.is_school ? '5' : '2')"
-          :complete="isFithStepComplete()"
+          step="3" 
         >
           <p class="text-center primary--text">Panier</p>
         </v-stepper-step>
@@ -56,17 +39,12 @@
         <v-divider></v-divider>
 
         <v-stepper-step 
-          :step="(!customerToAdd.is_school ? '6' : '3')"
-          :complete="isSixthStepComplete()"
+          step="4"
         >
           <p class="text-center primary--text">Paiement</p>
         </v-stepper-step>
       </v-stepper-header>
 
-      <CustomerTypeStep 
-        :isSchool="customerToAdd.is_school"
-        @get-customer-type="getCustomerType"
-      />
       <v-alert 
         v-if="error != null" 
         type="error"
@@ -77,49 +55,19 @@
       <v-stepper-items>
         <v-stepper-content 
           step="1"
-          v-if="!customerToAdd.is_school"
         >
           <ChildInfosStep
             @get-child-infos="getChildInfos"
           />
         </v-stepper-content>
-
-        <v-stepper-content 
-          step="2"
-          v-if="!customerToAdd.is_school"
-        >
-          <ProductTypeStep
-            @get-product-type="getProductType"
-          />
-        </v-stepper-content>
-
-        <v-stepper-content :step="(!customerToAdd.is_school ? '3' : '1')">
-          <AttributesListStep 
-            :attributes="attributes"
-            :isSchool="customerToAdd.is_school"
-            @selected-attribute="getSelectedAttribute"
-          />
-        </v-stepper-content>
         
         <v-stepper-content 
-          step="4"
-          v-if="!customerToAdd.is_school"
+          step="2"
         >
           <ProductsListStep 
             :products="products"
             :child="customerToAdd"
             @add-to-cart="createCustomization"
-          />
-        </v-stepper-content>
-
-        <v-stepper-content :step="(!customerToAdd.is_school ? '5' : '2')">
-          <CartStep @cart-validation="cartValidation()"/>
-        </v-stepper-content>
-
-        <v-stepper-content :step="(!customerToAdd.is_school ? '6' : '3')">
-          <PaymentStep
-            :showBooks="!customerToAdd.is_school"
-            @add-book="addBookToCart()"
           />
         </v-stepper-content>
       </v-stepper-items>
@@ -128,21 +76,12 @@
 </template>
 
 <script setup>
-  import CustomerTypeStep from './step/CustomerType.vue'
   import ChildInfosStep from './step/ChildInfos.vue'
-  import ProductTypeStep from './step/ProductTypeStep.vue'
-  import AttributesListStep from './step/AttributesList.vue'
   import ProductsListStep from './step/ProductsList.vue'
-  import CartStep from './step/Cart.vue'
-  import PaymentStep from './step/Payment.vue'
   import { ref, onMounted } from 'vue'
   //import axios from 'axios'
 
   const actualStep = ref(1)
-  const isFirstStepActive = ref(true)
-  const isSecondStepActive = ref(false)
-  const isThirdStepActive = ref(false)
-  const isFourthStepActive = ref(false)
 
   const products = ref([])
   const attributes = ref([])
@@ -155,83 +94,26 @@
   const token = ref(null)
 
   function isFirstStepComplete () {
-    if (customerToAdd.value.is_school 
-      || (customerToAdd.value.name != null
-      && customerToAdd.value.age != null)) {
+    if (customerToAdd.value.name != null
+      && customerToAdd.value.age != null) {
       return true
     }
     return false
   }
   function isSecondStepComplete () {
-    if (customerToAdd.value.is_school
-      || (isFirstStepComplete()
-      && productToAdd.value.product_type != null)) {
-      return true
-    }
-    return false
-  }
-  function isThirdStepComplete () {
-    if (isSecondStepComplete()
-      && productToAdd.value.id_attribute != null) {
-      return true
-    }
-    return false
-  }
-  function isFourthStepComplete () {
-    if (customerToAdd.value.is_school
-      || (isThirdStepComplete()
+    if (isFirstStepComplete()
       && productToAdd.value.id_product != null
-      && productToAdd.value.id_product_attribute != null)) {
-      return true
-    }
-    return false
-  }
-  function isFithStepComplete () {
-    if (isFourthStepComplete()) {
-      return true
-    }
-    return false
-  }
-  function isSixthStepComplete () {
-    if (isFithStepComplete()) {
+      && productToAdd.value.id_product_attribute != null) {
       return true
     }
     return false
   }
 
-  function getCustomerType (customer_type) {
-    customerToAdd.value.is_school = customer_type
-    productToAdd.value.product_type = null
-    productToAdd.value.id_attribute = null
-    productToAdd.value.id_product = null
-    productToAdd.value.id_product_attribute = null
-    customerToAdd.value.name = null
-    customerToAdd.value.age = null
 
-    attributes.value = getAttributes()
-    return actualStep.value = 1
-  }
   function getChildInfos (datas) {
     customerToAdd.value.name = datas.name
     customerToAdd.value.age = datas.age
     actualStep.value++
-  }
-  function getProductType (product_type) {
-    productToAdd.value.product_type = product_type
-    attributes.value = getAttributes(product_type)
-    actualStep.value++
-  }
-  function getSelectedAttribute (id_attribute) {
-    productToAdd.value.id_attribute = id_attribute
-    products.value = getProducts(id_attribute)
-    actualStep.value++
-  }
-  function cartValidation () {
-    actualStep.value++
-  }
-  function addBookToCart () {
-    //TODO : add book to cart
-    console.log('add book to cart - from selected universe')
   }
   function createCustomization (id_product, id_product_attribute) {
     productToAdd.value.id_product = id_product
@@ -281,96 +163,6 @@
     actualStep.value++
   } 
 
-  function getAttributes (product_type = 'letter') {
-    /* axios
-    .get(props.apiUrl, { params: { action: 'Index', product_type: product_type } })
-    .then(response => {
-      attributes.value = response.data
-      console.log(attributes.value)
-    })
-    .catch(error => {
-      console.log(error)
-    }) */
-    if (customerToAdd.value.is_school) {
-      return [
-        {
-          id: 1,
-          image: 'https://www.epopia.com/img/cms/grougignon.png',
-          frequency: '1 trimestre',
-          name: 'Mon royaume',
-          description: 'Faites découvrir le monde médiéval',
-          price: '99,00€',
-          classes: 'CP au CM2',
-          color: '#742985',
-        },
-        {
-          id: 2,
-          image: 'https://www.epopia.com/img/cms/ma-reserve-naturelle-personnage.png',
-          frequency: '1 trimestre',
-          name: 'Ma réserve naturelle',
-          description: 'Sensibilisez à la faune et l\'écologie',
-          price: '99,00€',
-          classes: 'Du CP au CM2',
-          color: '#38b6ab',
-        },
-        {
-          id: 3,
-          image: 'https://www.epopia.com/img/cms/les-apprentis-journalistes-personnages.png',
-          frequency: '1 trimestre',
-          name: 'Mon royaume',
-          description: 'Éduquez aux médias et à l\'information',
-          price: '99,00€',
-          classes: 'CM1 à la 6ème',
-          color: '#ebc35c',
-        },
-        {
-          id: 4,
-          image: 'https://www.epopia.com/img/cms/logo-jde.png',
-          frequency: '1 trimestre',
-          name: 'Offre spéciale',
-          description: null,
-          price: '169,00€',
-          classes: '',
-          color: '#55BBC8',
-        },
-      ]
-    } else {
-      //TODO : v-if productToAdd.value.product_type == "box" -> select boxes
-      return [
-        {
-          id: 1,
-          catchphrase: 'Idéal pour commencer',
-          name: 'Abonnement mensuel',
-          frequency: '/mois',
-          frequency_unit: 'mensuel',
-          price: '19,90€',
-          pricePerMonth: '',
-          image: 'https://www.epopia.com/img/cms/ideal-pour-commencer.png',
-        },
-        {
-          id: 2,
-          catchphrase: 'Idéal pour un cadeau',
-          name: 'Abonnement trimestriel',
-          frequency: '/trimestre',
-          frequency_unit: 'trimestriel',
-          price: '47€',
-          pricePerMonth: '15,67€/mois',
-          image: 'https://www.epopia.com/img/cms/ideal-pour-un-cadeau.png',
-        },
-        {
-          id: 3,
-          catchphrase: 'Le plus populaire',
-          name: 'Abonnement annuel',
-          frequency: '/an',
-          frequency_unit: 'annuel',
-          price: '149€',
-          pricePerMonth: '12,42€/mois',
-          image: 'https://www.epopia.com/img/cms/best-seller.png',
-        },
-      ]
-    }
-
-  }
   function getProducts (id_attribute = null) {
     /* axios
     .get(props.apiUrl, { params: { action: 'Index', id_attribute: id_attribute} })
@@ -713,16 +505,13 @@
       id_customization: ref(0),
       id_cart: ref(null),
       quantity: ref(1),
-      //quantity_refunded: ref(0),
-      //quantity_returned: ref(0),
-      //id_address_delivery: ref(null),
-      //in_cart: ref(true),
     },
     customerToAdd.value = {
-      is_school: ref(false),
       name: ref(null),
       age: ref(null),
     }
+
+    products.value = getProducts()
 
     /* axios
     .get(props.apiUrl, { params: { action: '' } })

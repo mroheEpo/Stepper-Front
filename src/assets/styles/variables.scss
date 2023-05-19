@@ -43,3 +43,10 @@ button.v-btn.v-btn--is-elevated {
 .v-stepper__header {
   box-shadow: none !important;
 }
+
+
+.swiper-slide-active {
+  border-radius: 50%;
+  background-color: #742985;
+  color: white !important;
+}

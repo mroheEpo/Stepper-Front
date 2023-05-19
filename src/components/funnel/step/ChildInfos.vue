@@ -15,19 +15,9 @@
         <span v-if="childName != null">{{ childName }}</span> 
         <span v-else>l'enfant</span> 
       ?</h2>
-
+    {{ childAge }}
       <div class="childInfosAgeChoice__container">
-        <AgeChoice/>
-        <!--v-list class="childInfosAgeChoice__agesContainer">
-          <v-list-item
-            v-for="age in ages"
-            :key="age"
-            :class="{'childInfosAge--is_selected' : isAgeSelected[age].value}"
-            @click="selectChildAge(age)"
-          > 
-            {{ age }} 
-          </v-list-item>
-        </v-list-->
+        <AgeChoice @get-child-age="selectedAge"/>
       </div>
       <v-btn
         @click="childInfosEmit"
@@ -40,9 +30,13 @@
 
 <script setup>
   import AgeChoice from './AgeChoice.vue'
-  import { ref, reactive, onMounted } from 'vue'
+  import { ref } from 'vue'
+
+  const childAge = ref(null)
+  const childName = ref(null)
   
   const emit = defineEmits('get-child-infos')
+
   function childInfosEmit () {
     if( childName.value != null & childAge.value != null ){
       const datas = {
@@ -54,46 +48,8 @@
     }
   }
 
-  const childAge = ref(null)
-  const childName = ref(null)
-  const ages = ref([])
-  //TODO : facto
-  const isAgeSelected = {
-    3 : ref(false),
-    4 : ref(false),
-    5 : ref(false),
-    6 : ref(false),
-    7 : ref(false),
-    8 : ref(false),
-    9 : ref(false),
-    10 : ref(false),
-    11 : ref(false),
-    12 : ref(false),
-    13 : ref(false),
-    14 : ref(false),
-    15 : ref(false),
-  }
-
-  function generateArrayOfAges (ages) {
-    for (var i = 3; i <= 15; i++) {
-      ages.value.push(i)
-    }
-    return ages
-  }
-
-  function selectChildAge (age) {
-    if(!isAgeSelected[age].value) {
-      isAgeSelected[age].value = true
-      Object.entries(isAgeSelected).forEach(function (item) {
-        (item[0] != age ? item[1].value = false : null);
-      })
-    }
-    return childAge.value = age
-  }
-
-  onMounted(() => {
-    generateArrayOfAges(ages);
-  })
+  const selectedAge = (age) => (childAge.value = age)
+  
 </script>
 
 <style scoped lang="scss">
@@ -104,9 +60,10 @@
     margin-bottom: 1rem;
     text-transform: unset;
     font-family: "VisbyRoundCF", sans-serif;
-  }
-  h2 span {
+    
+    span {
     color: #742985;
+    }
   }
 
   .childInfos__container {
@@ -166,29 +123,6 @@
       @media screen and (min-width: 900px) {
         width: 40%;
       }
-    }
-    .childInfosAgeChoice__agesContainer {
-      display: flex;
-      flex-direction: row;
-      background-color: #E1E5F5;
-
-      p {
-        text-align: center;
-        font-size: 25px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0px;
-        transition: all 0.3s ease;
-        width: 50px !important;
-        height: 50px;
-      }
-    }
-
-    .childInfosAge--is_selected {
-      border-radius: 50%;
-      background-color: #742985;
-      color: white !important;
     }
   }
   ::-webkit-scrollbar {
