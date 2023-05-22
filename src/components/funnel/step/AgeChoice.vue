@@ -25,10 +25,14 @@
 
   const emit = defineEmits('get-child-age')
   const childAgeEmit = (e) => {
-    console.log('here')
-    console.log(e)
-    //TODO : récupérer la valeur
-    selectedAge.value = 4
+    //TODO : find better method
+    setTimeout(() => {
+      for (var i = 0; i < (e.target).childNodes.length; i++) {
+        if (e.target.childNodes[i].className == "swiper-slide-active") {
+          selectedAge.value = i + 3
+        }
+      }
+    }, 100)
     emit('get-child-age', selectedAge.value)
   }
 
