@@ -2,6 +2,7 @@
   <swiper-container 
     :slides-per-view="8"  
     :centered-slides="true"
+    @init="swiperInit"
     @slidechange="childAgeEmit"
   >
     <swiper-slide
@@ -16,24 +17,22 @@
 <script setup>
   import { register } from 'swiper/element/bundle'
   import { Navigation, Pagination } from 'swiper'
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
 
   register()
 
   const ages = ref([])
+  const swiper = ref(null)
   const selectedAge = ref(3)
 
   const emit = defineEmits('get-child-age')
-  const childAgeEmit = (e) => {
-    //TODO : find better method
-    setTimeout(() => {
-      for (var i = 0; i < (e.target).childNodes.length; i++) {
-        if (e.target.childNodes[i].className == "swiper-slide-active") {
-          selectedAge.value = i + 3
-        }
-      }
-    }, 100)
+  function childAgeEmit () {
+    selectedAge.value = swiper.value.activeIndex + 3
     emit('get-child-age', selectedAge.value)
+  }
+
+  function swiperInit (e) {
+    swiper.value = e.detail[0]
   }
 
   function generateArrayOfAges (ages) {
