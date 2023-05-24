@@ -15,7 +15,6 @@
         <span v-if="childName != null">{{ childName }}</span> 
         <span v-else>l'enfant</span> 
       ?</h2>
-    {{ childAge }}
       <div class="childInfosAgeChoice__container">
         <AgeChoice @get-child-age="selectedAge"/>
       </div>
