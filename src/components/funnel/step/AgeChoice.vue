@@ -17,22 +17,23 @@
 <script setup>
   import { register } from 'swiper/element/bundle'
   import { Navigation, Pagination } from 'swiper'
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted, computed, reactive } from 'vue'
 
   register()
 
   const ages = ref([])
-  const swiper = ref(null)
-  const selectedAge = ref(3)
+  let swiper = reactive({});
+  const selectedAge = ref(null)
 
   const emit = defineEmits('get-child-age')
   function childAgeEmit () {
-    selectedAge.value = swiper.value.activeIndex + 3
+    selectedAge.value = swiper.activeIndex + 3
     emit('get-child-age', selectedAge.value)
   }
 
   function swiperInit (e) {
-    swiper.value = e.detail[0]
+    swiper = e.detail[0]
+    selectedAge.value = swiper.activeIndex + 3
   }
 
   function generateArrayOfAges (ages) {
